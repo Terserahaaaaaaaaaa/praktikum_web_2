@@ -300,6 +300,50 @@ $ni = $n->tampilkan();: Memanggil metode tampilkan() untuk mendapatkan data nila
 		<?php } ?>
 	</tbody>
 	</table>
+
+ #### 6. Polimorfisme
+ Polimorfisme memungkinkan satu antarmuka (dalam hal ini, nama metode) untuk digunakan dalam konteks yang berbeda. Dalam OOP, ini sering terjadi melalui pewarisan dan overriding.
+ ##### a. Implementasi dalam Kode
+ ###### Kelas mahasiswa memiliki metode tampilkan() yang mengembalikan data dari tabel mahasiswa berdasarkan kondisi NIM tertentu.
+ ###### Kelas nilai juga memiliki metode tampilkan(), tetapi fungsinya berbeda, yakni mengembalikan data dari tabel nilai dengan kondisi nilai akhir tertentu.
+ ##### b.Menggunakan Polimorfisme
+ Ketika Anda memanggil metode tampilkan() dari objek mahasiswa atau nilai, meskipun menggunakan nama metode yang sama, hasil dan perilaku yang diberikan akan berbeda tergantung pada kelas objek tersebut.
+
+ 	class mahasiswa extends Universitas{
+    public function __construct(){ //memanggil konstruktor dari class induk (Universitas)
+    parent:: __construct();
+    }
+
+	// Menyusun query SQL untuk mengambil semua data dari tabel mahasiswa dengan kondisi nim mahasiswa '230102081'
+	###### **public function tampilkan (){ //methode polimorphism** ###### 
+		$result = "SELECT * FROM mahasiswa WHERE nim_mhs = '230102081'";
+		return $this->mysqli->query($result);
+	}
+	}
+
+	// membuat class nilai untuk mewarisi class Universitas
+	class nilai extends Universitas{
+	    public function __construct(){ //memanggil konstruktor dari class induk (Universitas)
+	    parent:: __construct();
+	    }
+
+	// Menyusun query SQL untuk mengambil semua data dari tabel nilai akhir dengan kondisi nilai lebih besar dari atau sama dengan 3,60 (cumlaude)
+	###### **public function tampilkan (){ //methode polimorphism** ######
+		$result = "SELECT * FROM nilai WHERE nilai_akhir >= '3.60'";
+		return $this->mysqli->query($result);
+	}
+
+	}
+
+	// instansiasi kelas dan pemanggilan methode
+
+	//instansiasi class mahasiswa
+	$mhs = new mahasiswa();
+	$mahas = $mhs->tampilkan();
+
+	//instansiasi class nilai
+	$n = new nilai();
+	$ni = $n->tampilkan();
  
 
  
